@@ -104,6 +104,7 @@ function nodeAtCursor(textDocument: TextDocument, position: Position) {
     });
 
     const [node, ancestors] = findCurrentNode(ast, textDocument.offsetAt(position));
+    if (isDanglingHtmlElement(node)) return node;
     if (ancestors.at(-1)?.type === NodeTypes.HtmlElement) return ancestors.at(-1)!;
     if (node.type === NodeTypes.LiquidBranch) return ancestors.at(-1)!;
     return node;
